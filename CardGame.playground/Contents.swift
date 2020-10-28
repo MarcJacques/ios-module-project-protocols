@@ -279,22 +279,36 @@ class HighLow: CardGame {
 //: ## Step 20
 //: Create a class called `CardGameTracker` that conforms to the `CardGameDelegate` protocol. Implement the two required functions: `gameDidStart` and `game(player1DidDraw:player2DidDraw)`. Model `gameDidStart` after the same method in the guided project from today. As for the other method, have it print a message like the following:
 //: * "Player 1 drew a 6 of hearts, player 2 drew a jack of spades."
+var newCard = Card(suit: .spades, cardValue: .ace)
+var player1Card = newCard
+var player2Card = newCard
+
+
+var newDeck = Deck(eachCard: newCard)
+
 class CardGameTracker: CardGameDelegate {
-   
-    func gameDidStart(cardGame: CardGame) {
-        var gameHasEnded = false
-        while gameHasEnded = false {
-            print("Started a game of High Low")
-                
-            }
-        }
+    var player1Card: Card
+    var player2Card: Card
+    
+    init(player1Card: Card , player2Card:Card) {
+        self.player1Card = newDeck.drawCard()
+        self.player2Card = newDeck.drawCard()
     }
     
     func game(player1DidDraw card1: Card, player2DidDraw card2: Card) {
-        print("Player 1 drew a \(card1.description), player 2 drew a \(card2.description)")
-    }
+            print("Player 1 drew a \(card1.description), player 2 drew a \(card2.description)")
+        }
     
-    
+    func gameDidStart(cardGame: CardGame) {
+
+        var gameHasEnded = false
+        
+        while gameHasEnded == false {
+            print("Started a game of High Low")
+            game(player1DidDraw: player1Card, player2DidDraw: player1Card)
+            gameHasEnded = true
+            }
+        }
 }
 
 
@@ -306,5 +320,8 @@ class CardGameTracker: CardGameDelegate {
 //: Player 1 drew a 2 of diamonds, player 2 drew a ace of diamonds.
 //: Player 1 wins with 2 of diamonds.
 //: ```
-
+var highLowGame = HighLow()
+var cardGameTracker = CardGameTracker(player1Card: player1Card, player2Card: player2Card)
+highLowGame.cardGameDelegate = cardGameTracker
+highLowGame.cardGameDelegate(player1DidDraw: myDeck.drawCard(), player2DidDraw: myDeck.drawCard())
 
